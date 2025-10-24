@@ -20,7 +20,7 @@ public class ArticleMapperDao {
             article.setId(rs.getInt("id"));
             article.setName(rs.getString("name"));
             article.setNPaperId(rs.getInt("newspaper_id"));
-            article.setType(new TypeEntity(rs.getInt("type_id"), ""));
+            article.setType(new TypeEntity(rs.getInt("type_id"), rs.getString( "description")));
 
             list.add(article);
         }
@@ -33,7 +33,7 @@ public class ArticleMapperDao {
             article.setId(rs.getInt("id"));
             article.setName(rs.getString("name"));
             article.setNPaperId(rs.getInt("newspaper_id"));
-            article.setType(new TypeEntity(rs.getInt("type_id"), ""));
+            article.setType(new TypeEntity(rs.getInt("type_id"),rs.getString( "description")));
             return article;
         }
         return null;

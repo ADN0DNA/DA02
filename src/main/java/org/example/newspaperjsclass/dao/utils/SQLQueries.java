@@ -4,8 +4,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SQLQueries {
-    public static final String SELECT_ARTICLES_QUERY = "select * from article";
-    public static final String SELECT_ARTICLE_BY_ID_QUERY = "select * from article where id = ?";
+    public static final String SELECT_ARTICLES_QUERY =
+            "SELECT a.id, a.name, t.description,a.type_id, a.newspaper_id FROM article a INNER JOIN type t ON a.type_id = t.id";
+
+
+    public static final String SELECT_ARTICLE_BY_ID_QUERY =
+            "SELECT a.id, a.name, a.type_id, a.newspaper_id, AVG(ra.rating) AS avg_rating " +
+                    "FROM article a " +
+                    "LEFT JOIN readarticle ra ON a.id = ra.article_id " +
+                    "WHERE a.id = ? " +
+                    "GROUP BY a.id, a.name, a.type_id, a.newspaper_id";
     //Cambiar los INSERT para tener en cuenta los auto increment
     public static final String INSERT_ARTICLE_QUERY = "insert into article (name, type_id, newspaper_id) values(?,?,?)";
     public static final String UPDATE_ARTICLE_QUERY = "update article set name = ? where id = ?";
