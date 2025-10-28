@@ -1,6 +1,5 @@
 package org.example.newspaperjsclass.dao.jdbc;
 
-import jakarta.inject.Inject;
 import org.example.newspaperjsclass.dao.NewspaperRepository;
 import org.example.newspaperjsclass.dao.mappers.jdbc_mappers.NewspaperMapperDao;
 import org.example.newspaperjsclass.dao.model.NewspaperEntity;
@@ -8,6 +7,7 @@ import org.example.newspaperjsclass.dao.utils.DBConnectionPool;
 import org.example.newspaperjsclass.dao.utils.SQLQueries;
 import org.example.newspaperjsclass.domain.error.AppError;
 import org.example.newspaperjsclass.domain.error.DatabaseError;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+@Profile("jdbc")
 @Repository
 public class jdbcNewspaperRepository implements NewspaperRepository {
 

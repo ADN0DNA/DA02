@@ -1,6 +1,5 @@
 package org.example.newspaperjsclass.dao.jdbc;
 
-import jakarta.inject.Inject;
 import org.example.newspaperjsclass.dao.ReaderRepository;
 import org.example.newspaperjsclass.dao.utils.DBConnectionPool;
 import org.example.newspaperjsclass.dao.utils.SQLQueries;
@@ -9,11 +8,13 @@ import org.example.newspaperjsclass.dao.model.ReaderEntity;
 import org.example.newspaperjsclass.domain.error.AppError;
 import org.example.newspaperjsclass.domain.error.DatabaseError;
 import org.example.newspaperjsclass.domain.error.ForeignKeyError;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.List;
 
+@Profile("jdbc")
 @Repository
 public class jdbcReaderRepository implements ReaderRepository {
     private final ReaderMapperDao readerMapperDao;

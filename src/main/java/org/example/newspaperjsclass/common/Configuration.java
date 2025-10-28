@@ -31,3 +31,4 @@ public class Configuration {
         return p.getProperty(clave);
     }
 }
+//TODO delete this class when the application.properties is running correctly (stopped using the properties xml)

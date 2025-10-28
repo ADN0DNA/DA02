@@ -6,6 +6,7 @@ import org.example.newspaperjsclass.dao.model.CredentialEntity;
 import org.example.newspaperjsclass.dao.utils.DBConnectionPool;
 import org.example.newspaperjsclass.dao.utils.SQLQueries;
 import org.example.newspaperjsclass.domain.error.DatabaseError;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+@Profile("jdbc")
 @Repository
 public class jdbcCredentialRepository implements CredentialRepository {
 

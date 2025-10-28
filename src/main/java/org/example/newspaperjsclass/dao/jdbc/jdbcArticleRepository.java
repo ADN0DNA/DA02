@@ -9,12 +9,13 @@ import org.example.newspaperjsclass.dao.utils.SQLQueries;
 import org.example.newspaperjsclass.domain.error.AppError;
 import org.example.newspaperjsclass.domain.error.DatabaseError;
 import org.example.newspaperjsclass.domain.error.ForeignKeyError;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-
 
 import java.sql.*;
 import java.util.List;
 
+@Profile("jdbc")
 @Repository
 public class jdbcArticleRepository implements ArticleRepository {
     private final ArticleMapperDao articleMapperDao;
@@ -94,7 +95,9 @@ public class jdbcArticleRepository implements ArticleRepository {
         try (Connection con = dbConnectionPool.getConnection();
              PreparedStatement preparedStatement = con.prepareStatement(SQLQueries.UPDATE_ARTICLE_QUERY)) {
             preparedStatement.setString(1, article.getName());
-            preparedStatement.setInt(2, article.getId());
+            preparedStatement.setInt(2, article.getType().getId());
+            preparedStatement.setInt(3, article.getNPaperId());
+            preparedStatement.setInt(4, article.getId());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
@@ -122,7 +125,7 @@ public class jdbcArticleRepository implements ArticleRepository {
         }
         catch (SQLIntegrityConstraintViolationException e){
             con.rollback();
-            throw new ForeignKeyError("###  SQLIntegrityConstraintViolationException  ###");
+            throw new ForeignKeyError("THIS ARTICLE HAS A RATING, DO YOU WANT TO DELETE IT WITH ALL ITS CORRESPONDENCES?");
         }
         } catch (SQLException e) {
             throw new RuntimeException(e);

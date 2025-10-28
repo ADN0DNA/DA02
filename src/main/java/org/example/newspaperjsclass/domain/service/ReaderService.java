@@ -1,8 +1,9 @@
 package org.example.newspaperjsclass.domain.service;
 
-import jakarta.inject.Inject;
+import org.example.newspaperjsclass.dao.ReadArticleRepository;
 import org.example.newspaperjsclass.dao.ReaderRepository;
 import org.example.newspaperjsclass.dao.jdbc.jdbcReaderRepository;
+import org.example.newspaperjsclass.dao.model.ReadArticleEntity;
 import org.example.newspaperjsclass.dao.model.ReaderEntity;
 import org.example.newspaperjsclass.domain.mappers.ReaderMapperService;
 import org.example.newspaperjsclass.domain.model.ReadArticleDTO;
@@ -17,11 +18,13 @@ public class ReaderService {
     private final ReaderRepository readerRepository;
     private final jdbcReaderRepository jdbcReaderRepository;
     private final ReaderMapperService readerMapperService;
+    private final ReadArticleRepository readArticleRepository;
 
-    public ReaderService(ReaderRepository readerRepository, jdbcReaderRepository jdbcReaderRepository, ReaderMapperService readerMapperService) {
+    public ReaderService(ReaderRepository readerRepository, jdbcReaderRepository jdbcReaderRepository, ReaderMapperService readerMapperService, ReadArticleRepository readArticleRepository) {
         this.readerRepository = readerRepository;
         this.jdbcReaderRepository = jdbcReaderRepository;
         this.readerMapperService = readerMapperService;
+        this.readArticleRepository = readArticleRepository;
     }
 
     public List<ReaderDTO> getAllReaders() {
@@ -55,6 +58,22 @@ public class ReaderService {
     }
 
     public List<ReadArticleDTO> getAllReadersByArticleId(int articleId) {
+        List<ReaderEntity> readers = readerRepository.getAll();
+        List<ReadArticleEntity> readArticles = readArticleRepository.getAll();
+        List<ReaderDTO> articleReaders = null;
+        for (ReadArticleEntity readArticle : readArticles) {
+            if (readArticle.getArticleId() == articleId) {
+                for (ReaderEntity reader : readers) {
+                    if (reader.getId() == readArticle.getReaderId()) {
+                        articleReaders.add(readerMapperService.mapToDTO(reader));
+                    }
+                }
+            }
+
+        }
+
+        //return articleReaders;
+        System.out.println("DELETE LATER, IF THIS METHOD IS SUPPOSED TO RETURN ALL THE READERS OF AN ARTICLE, WHY IS IT RETURNING List<ReadArticleDTO> THOSE ARE NOT THE READERS");
         return null;
     }
 }
